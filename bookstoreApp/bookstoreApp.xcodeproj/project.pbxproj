@@ -11,6 +11,7 @@
 		F98F40042D222BE600098BF1 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = F98F40032D222BE600098BF1 /* RxBlocking */; };
 		F98F40062D222BE600098BF1 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = F98F40052D222BE600098BF1 /* RxCocoa */; };
 		F98F40082D222BE600098BF1 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = F98F40072D222BE600098BF1 /* RxRelay */; };
+		F98F400B2D223CC200098BF1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F98F400A2D223CC200098BF1 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F98F400B2D223CC200098BF1 /* Alamofire in Frameworks */,
 				F98F40062D222BE600098BF1 /* RxCocoa in Frameworks */,
 				F98F3F7D2D213C7500098BF1 /* SnapKit in Frameworks */,
 				F98F40082D222BE600098BF1 /* RxRelay in Frameworks */,
@@ -93,6 +95,7 @@
 				F98F40032D222BE600098BF1 /* RxBlocking */,
 				F98F40052D222BE600098BF1 /* RxCocoa */,
 				F98F40072D222BE600098BF1 /* RxRelay */,
+				F98F400A2D223CC200098BF1 /* Alamofire */,
 			);
 			productName = bookstoreApp;
 			productReference = F98F3F582D20EC1A00098BF1 /* bookstoreApp.app */;
@@ -125,6 +128,7 @@
 			packageReferences = (
 				F98F3F7B2D213C7500098BF1 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				F98F40022D222BE600098BF1 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				F98F40092D223CC200098BF1 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F98F3F592D20EC1A00098BF1 /* Products */;
@@ -380,6 +384,14 @@
 				minimumVersion = 6.8.0;
 			};
 		};
+		F98F40092D223CC200098BF1 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -402,6 +414,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F98F40022D222BE600098BF1 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxRelay;
+		};
+		F98F400A2D223CC200098BF1 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F98F40092D223CC200098BF1 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
