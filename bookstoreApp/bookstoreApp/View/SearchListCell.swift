@@ -42,10 +42,15 @@ class SearchListCell: UICollectionViewCell {
         return stackView
     }()
         
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         setupUI()
+        backgroundColor = .lightGray
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     func setupUI() {
@@ -72,10 +77,10 @@ class SearchListCell: UICollectionViewCell {
         }
     }
     
-    func configure(with image: UIImage, title: String ,authors: [String] ) {
-        bookNameLabel.text = title
-        bookAuthorLabel.text = "\(authors)"
-        imageView.image = image
+    func configure(with book: RecentBook ) {
+        bookNameLabel.text = book.title
+        bookAuthorLabel.text = book.authors.joined(separator: ", ")
+        //imageView.image = image
     }
     
 }
