@@ -68,9 +68,14 @@ class SearchListCell: UICollectionViewCell {
         
         verticalStackView.snp.makeConstraints { make in
             make.verticalEdges.equalToSuperview().inset(10)
-            make.leading.equalTo(imageView.snp.trailing).offset(20)
-            
+            make.leading.equalTo(imageView.snp.trailing).inset(20)
         }
+    }
+    
+    func configure(with image: UIImage, title: String ,authors: [String] ) {
+        bookNameLabel.text = title
+        bookAuthorLabel.text = "\(authors)"
+        imageView.image = image
     }
     
 }

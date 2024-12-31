@@ -14,5 +14,5 @@ struct Infos: Codable {
     let authors: [String]?
     let contents: String?
     let title: String?
-    let thumbnail : String?
+    let thumbnail: String?
 }

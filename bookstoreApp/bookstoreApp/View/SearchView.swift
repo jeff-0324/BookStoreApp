@@ -16,11 +16,10 @@ class SearchView: UIView {
     }()
     
     private let collectionView: UICollectionView = {
-        let collectionView = UICollectionView()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .gray
         return collectionView
     }()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,5 +49,4 @@ class SearchView: UIView {
             make.bottom.equalToSuperview()
         }
     }
-    
 }
