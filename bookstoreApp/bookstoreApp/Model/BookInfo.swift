@@ -7,12 +7,14 @@
 import Foundation
 
 struct BookInfo: Codable {
-    let documents: [Infos]
+    let documents: [Data]
 }
 
-struct Infos: Codable {
-    let authors: [String]?
-    let contents: String?
-    let title: String?
-    let thumbnail : String?
+extension BookInfo {
+    struct Data: Codable {
+        let authors: [String]?
+        let contents: String?
+        let title: String?
+        let thumbnail: String?
+    }
 }

@@ -14,9 +14,9 @@ class NetworkManager {
     static let shared = NetworkManager()
     private init() {}
     
-    func fetchData<T: Decodable> (_ url: URL, _ header: HTTPHeader) -> Single<T> {
+    func fetchData<T: Decodable> (_ url: URL, _ header: HTTPHeaders) -> Single<T> {
         return Single<T>.create { single in
-           AF.request(url).responseDecodable(of: T.self) { response in
+            AF.request(url, headers: header).responseDecodable(of: T.self) { response in
                switch response.result {
                case .success(let data) :
                    single(.success(data))

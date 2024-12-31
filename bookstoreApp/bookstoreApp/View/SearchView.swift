@@ -15,16 +15,34 @@ class SearchView: UIView {
         return searchBar
     }()
     
-    private let collectionView: UICollectionView = {
-        let collectionView = UICollectionView()
-        collectionView.backgroundColor = .gray
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                  heightDimension: .fractionalHeight(1.0)
+            )
+            
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4),
+                                                   heightDimension: .fractionalHeight(0.6)
+            )
+            
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .continuous
+            section.interGroupSpacing = 10
+            section.contentInsets = .init(top: 10, leading: 10, bottom: 20, trailing: 10)
+            return section
+        }
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return collectionView
     }()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        collectionView.register(SearchListCell.self, forCellWithReuseIdentifier: SearchListCell.id)
     }
     
     required init?(coder: NSCoder) {
@@ -47,8 +65,7 @@ class SearchView: UIView {
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(searchBar.snp.bottom).offset(20)
             make.horizontalEdges.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().inset(20)
         }
     }
-    
 }
