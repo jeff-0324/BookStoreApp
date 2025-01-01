@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F97A2BDF2D253406000C93A3 /* CartBookEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A2BDB2D253406000C93A3 /* CartBookEntity+CoreDataClass.swift */; };
+		F97A2BE02D253406000C93A3 /* RecentBookEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A2BDD2D253406000C93A3 /* RecentBookEntity+CoreDataClass.swift */; };
+		F97A2BE12D253406000C93A3 /* CartBookEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A2BDC2D253406000C93A3 /* CartBookEntity+CoreDataProperties.swift */; };
+		F97A2BE22D253406000C93A3 /* RecentBookEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A2BDE2D253406000C93A3 /* RecentBookEntity+CoreDataProperties.swift */; };
+		F97A2BE52D2534BB000C93A3 /* BookInfoEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A2BE32D2534BB000C93A3 /* BookInfoEntity+CoreDataClass.swift */; };
+		F97A2BE62D2534BB000C93A3 /* BookInfoEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A2BE42D2534BB000C93A3 /* BookInfoEntity+CoreDataProperties.swift */; };
 		F98F3F7D2D213C7500098BF1 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F98F3F7C2D213C7500098BF1 /* SnapKit */; };
 		F98F40042D222BE600098BF1 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = F98F40032D222BE600098BF1 /* RxBlocking */; };
 		F98F40062D222BE600098BF1 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = F98F40052D222BE600098BF1 /* RxCocoa */; };
@@ -15,6 +21,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F97A2BDB2D253406000C93A3 /* CartBookEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CartBookEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F97A2BDC2D253406000C93A3 /* CartBookEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CartBookEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F97A2BDD2D253406000C93A3 /* RecentBookEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentBookEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F97A2BDE2D253406000C93A3 /* RecentBookEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentBookEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F97A2BE32D2534BB000C93A3 /* BookInfoEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookInfoEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F97A2BE42D2534BB000C93A3 /* BookInfoEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookInfoEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F98F3F582D20EC1A00098BF1 /* bookstoreApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bookstoreApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -58,6 +70,12 @@
 		F98F3F4F2D20EC1A00098BF1 = {
 			isa = PBXGroup;
 			children = (
+				F97A2BE32D2534BB000C93A3 /* BookInfoEntity+CoreDataClass.swift */,
+				F97A2BE42D2534BB000C93A3 /* BookInfoEntity+CoreDataProperties.swift */,
+				F97A2BDB2D253406000C93A3 /* CartBookEntity+CoreDataClass.swift */,
+				F97A2BDC2D253406000C93A3 /* CartBookEntity+CoreDataProperties.swift */,
+				F97A2BDD2D253406000C93A3 /* RecentBookEntity+CoreDataClass.swift */,
+				F97A2BDE2D253406000C93A3 /* RecentBookEntity+CoreDataProperties.swift */,
 				F98F3F5A2D20EC1A00098BF1 /* bookstoreApp */,
 				F98F3F592D20EC1A00098BF1 /* Products */,
 			);
@@ -155,6 +173,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F97A2BDF2D253406000C93A3 /* CartBookEntity+CoreDataClass.swift in Sources */,
+				F97A2BE02D253406000C93A3 /* RecentBookEntity+CoreDataClass.swift in Sources */,
+				F97A2BE12D253406000C93A3 /* CartBookEntity+CoreDataProperties.swift in Sources */,
+				F97A2BE22D253406000C93A3 /* RecentBookEntity+CoreDataProperties.swift in Sources */,
+				F97A2BE52D2534BB000C93A3 /* BookInfoEntity+CoreDataClass.swift in Sources */,
+				F97A2BE62D2534BB000C93A3 /* BookInfoEntity+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
