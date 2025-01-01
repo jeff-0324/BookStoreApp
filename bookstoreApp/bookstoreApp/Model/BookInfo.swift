@@ -1,20 +1,15 @@
 //
-//  BookInfo.swift
+//  BookInformation.swift
 //  bookstoreApp
 //
-//  Created by jae hoon lee on 12/29/24.
+//  Created by jae hoon lee on 12/31/24.
 //
 import Foundation
 
-struct BookInfo: Codable {
-    let documents: [Data]
-}
-
-extension BookInfo {
-    struct Data: Codable {
-        let authors: [String]?
-        let contents: String?
-        let title: String?
-        let thumbnail: String?
-    }
+struct BookInfo {
+    let authors: [String]
+    let contents: String
+    let thumbnail: Data
+    let title: String
+    let isbn: String
 }

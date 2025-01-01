@@ -59,8 +59,8 @@ class SearchViewController: UIViewController {
     private let searchView = SearchView()
     let disposeBag = DisposeBag()
     
-    var recentBooks = [BookInfo]()
-    var searchBooks = [BookInfo]()
+    var recentBooks = [BookInformation]()
+    var searchBooks = [BookInformation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -183,7 +183,7 @@ extension SearchViewController {
         let header: HTTPHeaders = ["Authorization": "KakaoAK 2650b14821af8f320b2b30c04f351189"]
         
         NetworkManager.shared.fetchData(url, header)
-            .subscribe(onSuccess: { (bookinfoResponse: BookInfo) in
+            .subscribe(onSuccess: { (bookinfoResponse: BookInformation) in
                 print(bookinfoResponse)
             }, onFailure: {  error in
                 print(error)
