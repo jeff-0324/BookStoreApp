@@ -4,7 +4,7 @@
         <attribute name="authors" optional="YES" attributeType="Transformable" customClassName="[String]"/>
         <attribute name="contents" optional="YES" attributeType="String"/>
         <attribute name="isbn" optional="YES" attributeType="String"/>
-        <attribute name="thumbnail" optional="YES" attributeType="Binary"/>
+        <attribute name="thumbnail" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <entity name="CartBookEntity" representedClassName="CartBookEntity" parentEntity="BookInfoEntity" syncable="YES">

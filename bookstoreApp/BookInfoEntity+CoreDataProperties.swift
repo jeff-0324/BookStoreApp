@@ -18,7 +18,7 @@ extension BookInfoEntity {
 
     @NSManaged public var authors: [String]?
     @NSManaged public var contents: String?
-    @NSManaged public var thumbnail: Data?
+    @NSManaged public var thumbnail: String?
     @NSManaged public var title: String?
     @NSManaged public var isbn: String?
 

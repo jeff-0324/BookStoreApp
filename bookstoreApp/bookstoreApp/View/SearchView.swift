@@ -10,39 +10,24 @@ import SnapKit
 
 class SearchView: UIView {
     
-    private var searchBar: UISearchBar = {
+     var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
+        searchBar.placeholder = "검색할 단어를 입력해주세요."
+        searchBar.showsCancelButton = true
         return searchBar
     }()
     
     let collectionView: UICollectionView = {
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                  heightDimension: .fractionalHeight(1.0)
-            )
-            
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4),
-                                                   heightDimension: .fractionalHeight(0.6)
-            )
-            
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-            
-            let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = .continuous
-            section.interGroupSpacing = 10
-            section.contentInsets = .init(top: 10, leading: 10, bottom: 20, trailing: 10)
-            return section
-        }
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         return collectionView
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        
         collectionView.register(SearchListCell.self, forCellWithReuseIdentifier: SearchListCell.id)
+        collectionView.register(RecentBookCell.self, forCellWithReuseIdentifier: RecentBookCell.id)
     }
     
     required init?(coder: NSCoder) {

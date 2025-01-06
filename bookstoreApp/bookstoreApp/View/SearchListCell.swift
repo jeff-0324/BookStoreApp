@@ -11,22 +11,25 @@ import SnapKit
 class SearchListCell: UICollectionViewCell {
     static let id: String = "SearchListCell"
     
-    private let imageView: UIImageView = {
+    lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 10
         return imageView
     }()
     
-    private let bookNameLabel: UILabel = {
+    var bookNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 17)
+        label.font = .boldSystemFont(ofSize: 16)
+        label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         label.textAlignment = .left
         return label
     }()
     
-    private let bookAuthorLabel: UILabel = {
+    var bookAuthorLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textColor = .gray
@@ -38,6 +41,7 @@ class SearchListCell: UICollectionViewCell {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .fill
+        stackView.distribution = .fillEqually
         stackView.spacing = 10
         return stackView
     }()
@@ -45,7 +49,7 @@ class SearchListCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setupUI()
+        setupSearchViewUI()
         backgroundColor = .lightGray
     }
     
@@ -53,7 +57,7 @@ class SearchListCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
-    func setupUI() {
+    private func setupSearchViewUI() {
         
         [
             bookNameLabel,
@@ -68,19 +72,33 @@ class SearchListCell: UICollectionViewCell {
         imageView.snp.makeConstraints { make in
             make.verticalEdges.equalToSuperview().inset(10)
             make.leading.equalToSuperview().offset(10)
-            make.width.equalTo(70)
+            make.width.equalTo(80)
         }
         
         verticalStackView.snp.makeConstraints { make in
-            make.verticalEdges.equalToSuperview().inset(10)
-            make.leading.equalTo(imageView.snp.trailing).inset(20)
+            make.verticalEdges.equalToSuperview().inset(30)
+            make.leading.equalTo(imageView.snp.trailing).offset(20)
+            make.trailing.equalToSuperview().inset(10)
         }
     }
     
-    func configure(with book: RecentBook ) {
+     func configure(with book: BookInfo ) {
         bookNameLabel.text = book.title
         bookAuthorLabel.text = book.authors.joined(separator: ", ")
-        //imageView.image = image
+        if let url = URL(string: book.thumbnail) {
+                imageView.kf.setImage(with: url) // Kingfisher를 사용해 이미지 설정
+            } else {
+                imageView.image = UIImage(named: "placeholder") // 기본 이미지
+            }
+    }
+    
+     func configure1(with book: RecentBook ) {
+        bookNameLabel.text = book.title
+        if let url = URL(string: book.thumbnail) {
+                imageView.kf.setImage(with: url) // Kingfisher를 사용해 이미지 설정
+            } else {
+                imageView.image = UIImage(named: "placeholder") // 기본 이미지
+            }
     }
     
 }
