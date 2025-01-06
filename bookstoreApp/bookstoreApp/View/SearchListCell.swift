@@ -45,7 +45,7 @@ class SearchListCell: UICollectionViewCell {
         stackView.spacing = 10
         return stackView
     }()
-        
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -85,13 +85,14 @@ class SearchListCell: UICollectionViewCell {
         contentView.layer.borderColor = UIColor.lightGray.cgColor
     }
     
-     func configure(with book: BookInfo ) {
+    func configure(with book: BookInfo ) {
         bookNameLabel.text = book.title
-        bookAuthorLabel.text = book.authors.joined(separator: ", ")
+        bookAuthorLabel.text = book.decodedAuthors().joined(separator: ",")
         if let url = URL(string: book.thumbnail) {
-                imageView.kf.setImage(with: url) // Kingfisher를 사용해 이미지 설정
-            } else {
-                imageView.image = UIImage(named: "placeholder") // 기본 이미지
-            }
+            // Kingfisher를 사용해 이미지 설정
+            imageView.kf.setImage(with: url)
+        } else {
+            imageView.image = UIImage(named: "placeholder")
+        }
     }
 }

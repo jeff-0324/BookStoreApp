@@ -80,7 +80,7 @@ class RecentBookCell: UICollectionViewCell {
         contentView.layer.borderColor = UIColor.lightGray.cgColor
     }
     
-    func configure1(with book: RecentBook ) {
+    func configure(with book: BookInfo ) {
        bookNameLabel.text = book.title
        if let url = URL(string: book.thumbnail) {
                imageView.kf.setImage(with: url) // Kingfisher를 사용해 이미지 설정

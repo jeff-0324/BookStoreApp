@@ -7,7 +7,7 @@
 import Foundation
 
 struct BookInfo {
-    let authors: [String]
+    let authors: Data
     let contents: String
     let thumbnail: String
     let title: String
@@ -17,11 +17,15 @@ struct BookInfo {
 
 extension BookInfo {
     init(from data: BookInformation.Data) {
-        self.authors = data.authors ?? []
+        self.authors = try! JSONEncoder().encode(data.authors ?? [])
         self.contents = data.contents ?? ""
         self.thumbnail = data.thumbnail ?? ""
         self.title = data.title ?? ""
         self.price = data.price ?? 0.0
         self.isbn = data.isbn ?? ""
+    }
+
+    func decodedAuthors() -> [String] {
+        return (try? JSONDecoder().decode([String].self, from: authors)) ?? []
     }
 }

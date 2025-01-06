@@ -11,24 +11,11 @@ import SnapKit
 class DetailViewController: UIViewController {
     private let detailView = DetailView()
     private var bookInfo: BookInfo?
-
-    func configure(with book: BookInfo) {
-        self.bookInfo = book
-    }
-    
-    func configure1(with book: RecentBook) {
-        self.title = book.title
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         updateUI()
-        
-        // bookInfo를 기반으로 UI 구성
-        if let bookInfo = bookInfo {
-            print("print")
-        }
     }
     
     func setupUI() {
@@ -38,6 +25,11 @@ class DetailViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
+    
+    func configure(with book: BookInfo) {
+        self.bookInfo = book
+    }
+    
     func updateUI() {
         guard let bookInfos = bookInfo else { return }
         detailView.update(with: bookInfos)

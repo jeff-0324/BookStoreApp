@@ -170,7 +170,7 @@ class DetailView: UIView {
     
     func update(with book: BookInfo ) {
         bookNameLabel.text = book.title
-        bookAuthorLabel.text = book.authors.joined(separator: ", ")
+        bookAuthorLabel.text = book.decodedAuthors().joined(separator: ",")
         bookPriceLabel.text = "\(PriceFormatModel.wonFormat(Int(book.price)))"
         bookContentsLabel.text = book.contents
        if let url = URL(string: book.thumbnail) {
