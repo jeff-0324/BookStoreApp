@@ -16,6 +16,7 @@ extension BookInformation {
         let contents: String?
         let title: String?
         let thumbnail: String?
+        let price: Double?
         let isbn: String?
     }
 }

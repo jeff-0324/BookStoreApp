@@ -117,6 +117,4 @@ class CoreDataManager {
             return []
         }
     }
-    
-    
 }

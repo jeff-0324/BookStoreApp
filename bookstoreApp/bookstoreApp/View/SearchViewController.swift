@@ -55,10 +55,10 @@ class SearchViewController: UIViewController {
         searchView.collectionView.dataSource = self
         searchView.collectionView.delegate = self
         searchView.collectionView.register(
-                SectionHeaderView.self,
-                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: SectionHeaderView.id
-            )
+            SectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SectionHeaderView.id
+        )
         searchView.collectionView.collectionViewLayout = creatLayout()
     }
     
@@ -70,6 +70,7 @@ class SearchViewController: UIViewController {
         }
     }
     
+    //MARK: - CollectionView Layout
     func creatLayout() -> UICollectionViewLayout {
         return UICollectionViewCompositionalLayout { sectionIndex, enviroment in
             guard let sectionType = Section(rawValue: sectionIndex) else { return nil}
@@ -94,7 +95,7 @@ class SearchViewController: UIViewController {
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(100),
-            heightDimension: .absolute(150)
+            heightDimension: .absolute(140)
         )
         
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
@@ -174,18 +175,22 @@ extension SearchViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchListCell.id, for: indexPath) as? SearchListCell else {  return UICollectionViewCell()
-        }
         
         switch Section(rawValue: indexPath.section) {
         case .recentBook:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecentBookCell.id, for: indexPath) as? RecentBookCell else {  return UICollectionViewCell()
+            }
             cell.configure1(with: recentBook[indexPath.row])
+            return cell
         case .searchBooks:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchListCell.id, for: indexPath) as? SearchListCell else {  return UICollectionViewCell()
+            }
             cell.configure(with: searchBooks[indexPath.row])
+            return cell
         case .none:
             break
         }
-        return cell
+        return UICollectionViewCell()
     }
     
     //MARK: - section header
@@ -195,8 +200,8 @@ extension SearchViewController: UICollectionViewDataSource {
         }
         
         guard let section = Section(rawValue: indexPath.section) else {
-             return UICollectionReusableView()
-         }
+            return UICollectionReusableView()
+        }
         
         let headerView = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
@@ -214,7 +219,31 @@ extension SearchViewController: UICollectionViewDataSource {
 }
 
 extension SearchViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let detailVC = DetailViewController()
+        let section = Section(rawValue: indexPath.section)
+        
+        switch section {
+        case .recentBook:
+            let recentData = recentBook[indexPath.row]
+            let bookInfo =  BookInfo(authors: recentData.authors,
+                                     contents: recentData.title,
+                                     thumbnail: recentData.contents,
+                                     title: recentData.thumbnail, price: 0.0, isbn: "")
+            detailVC.configure(with: bookInfo)
+        case .searchBooks:
+            let data = searchBooks[indexPath.row]
+            
+            detailVC.configure(with: data)
+            
+            print("taped")
+        default :
+            break
+        }
+        detailVC.modalPresentationStyle = .pageSheet
+        present(detailVC, animated: true)
+    }
 }
 
 //MARK: - api요청
@@ -243,3 +272,5 @@ extension SearchViewController: UISearchBarDelegate {
         fetchSearchData(query: searchBar.text!)
     }
 }
+
+

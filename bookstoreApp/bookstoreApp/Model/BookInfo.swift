@@ -11,6 +11,7 @@ struct BookInfo {
     let contents: String
     let thumbnail: String
     let title: String
+    let price: Double
     let isbn: String
 }
 
@@ -20,6 +21,7 @@ extension BookInfo {
         self.contents = data.contents ?? ""
         self.thumbnail = data.thumbnail ?? ""
         self.title = data.title ?? ""
+        self.price = data.price ?? 0.0
         self.isbn = data.isbn ?? ""
     }
 }
