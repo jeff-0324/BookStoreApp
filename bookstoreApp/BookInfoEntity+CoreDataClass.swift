@@ -2,7 +2,7 @@
 //  BookInfoEntity+CoreDataClass.swift
 //  bookstoreApp
 //
-//  Created by jae hoon lee on 1/1/25.
+//  Created by jae hoon lee on 1/6/25.
 //
 //
 
@@ -18,6 +18,7 @@ public class BookInfoEntity: NSManagedObject {
         static let contents = "contents"
         static let thumbnail = "thumbnail"
         static let title = "title"
+        static let price = "price"
         static let isbn = "isbn"
     }
 }

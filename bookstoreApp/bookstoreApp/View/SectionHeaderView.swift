@@ -39,6 +39,4 @@ class SectionHeaderView: UICollectionReusableView {
     func configure(with title: String) {
         titleLable.text = title
     }
-    
-    
 }

@@ -34,7 +34,6 @@ class RecentBookCell: UICollectionViewCell {
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
         stackView.spacing = 10
-        stackView.backgroundColor = .yellow
         return stackView
     }()
     
@@ -42,7 +41,6 @@ class RecentBookCell: UICollectionViewCell {
         super.init(frame: frame)
         
         setupRecentBookUI()
-        backgroundColor = .lightGray
     }
     
     required init?(coder: NSCoder) {
@@ -65,6 +63,7 @@ class RecentBookCell: UICollectionViewCell {
         }
         
         imageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(10)
             make.height.equalTo(80)
             make.width.equalTo(80)
            
@@ -72,7 +71,21 @@ class RecentBookCell: UICollectionViewCell {
         
         bookNameLabel.snp.makeConstraints { make in
             make.height.equalTo(40)
+            make.horizontalEdges.equalToSuperview().inset(10)
             
         }
+        
+        contentView.layer.cornerRadius = 5
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.lightGray.cgColor
     }
+    
+    func configure(with book: BookInfo ) {
+       bookNameLabel.text = book.title
+       if let url = URL(string: book.thumbnail) {
+               imageView.kf.setImage(with: url) // Kingfisher를 사용해 이미지 설정
+           } else {
+               imageView.image = UIImage(named: "placeholder") // 기본 이미지
+           }
+   }
 }

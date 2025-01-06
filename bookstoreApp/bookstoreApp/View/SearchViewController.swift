@@ -11,58 +11,40 @@ import RxSwift
 import Alamofire
 import Kingfisher
 
-struct RecentBook {
-    let authors: [String]
-    let contents: String
-    let thumbnail: String
-    let title: String
-}
-
 class SearchViewController: UIViewController {
     
-    // 더미 데이터
-    let recentBook: [RecentBook] = [RecentBook(
-        authors : [ "세이노" ],
-        contents : "2000년부터 발표된 그의 주옥같은 글들. 독자들이 자발적으로 만든 제본서는 물론, 전자책과 앱까지 나왔던 《세이노의 가르침》이 드디어 전국 서점에서 독자들을 마주한다. 여러 판본을 모으고 저자의 확인을 거쳐 최근 생각을 추가로 수록하였다. 정식 출간본에만 추가로 수록된 글들은 목차와 본문에 별도 표시하였다.  더 많은 사람이 이 책을 보고 힘을 얻길 바라기에 인세도 안 받는 저자의 마음을 담아, 700쪽이 넘는 분량에도 7천 원 안팎에 책을 구매할",
-        thumbnail: "https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F6266671%3Ftimestamp%3D20241228151802" ,
-        title : "세이노의 가르침(올블랙 유광 에디션)"
-    ),RecentBook(
-        authors : [ "한강" ],
-        contents : "2014년 만해문학상, 2017년 이탈리아 말라파르테 문학상을 수상하고 전세계 20여개국에 번역 출간되며 세계를 사로잡은 우리 시대의 소설 『소년이 온다』. 이 작품은 『채식주의자』로 인터내셔널 부커상을 수상한 한강 작가에게 “눈을 뗄 수 없는, 보편적이며 깊은 울림”(뉴욕타임즈), “역사와 인간의 본질을 다룬 충격적이고 도발적인 소설”(가디언), “한강을 뛰어넘은 한강의 소설”(문학평론가 신형철)이라는 찬사를 선사한 작품으로, 그간 많은 독자들",
-        thumbnail : "https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F6266671%3Ftimestamp%3D20241228151802",
-        title : "소년이 온다"
-    ),RecentBook(
-        authors : [ "한강" ],
-        contents : "2014년 만해문학상, 2017년 이탈리아 말라파르테 문학상을 수상하고 전세계 20여개국에 번역 출간되며 세계를 사로잡은 우리 시대의 소설 『소년이 온다』. 이 작품은 『채식주의자』로 인터내셔널 부커상을 수상한 한강 작가에게 “눈을 뗄 수 없는, 보편적이며 깊은 울림”(뉴욕타임즈), “역사와 인간의 본질을 다룬 충격적이고 도발적인 소설”(가디언), “한강을 뛰어넘은 한강의 소설”(문학평론가 신형철)이라는 찬사를 선사한 작품으로, 그간 많은 독자들",
-        thumbnail : "https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F6266671%3Ftimestamp%3D20241228151802",
-        title : "소년이 온다"
-    )
-    ]
+    private let disposeBag = DisposeBag()
     
     private let searchView = SearchView()
+    private let viewModel = MainViewModel()
     
-    let disposeBag = DisposeBag()
+    private var recentBooks = [BookInfo]()
+    private var searchBooks = [BookInfo]()
     
-    var recentBooks = [BookInfo]()
-    var searchBooks = [BookInfo]()
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super .init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        
+        self.tabBarItem = UITabBarItem(title: "Search",
+                                       image: UIImage(systemName: "magnifyingglass"),
+                                       tag: 0)
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
-        searchView.searchBar.delegate = self
-        
-        searchView.collectionView.dataSource = self
-        searchView.collectionView.delegate = self
-        searchView.collectionView.register(
-                SectionHeaderView.self,
-                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: SectionHeaderView.id
-            )
-        searchView.collectionView.collectionViewLayout = creatLayout()
+        bind()
+        setting()
     }
     
-    func setupUI() {
+    //MARK: - setting
+    private func setupUI() {
         view.addSubview(searchView)
         
         searchView.snp.makeConstraints { make in
@@ -70,12 +52,63 @@ class SearchViewController: UIViewController {
         }
     }
     
+    //MARK: - Binding
+    private func bind() {
+        //searchDataSubject Binding
+        viewModel.searchDataSubject
+            .observe(on: MainScheduler.instance)
+            .subscribe (onNext: { [weak self] books in
+                self?.searchBooks = books
+                self?.searchView.collectionView.reloadData()
+            }, onError: { error in
+                print(error)
+            }).disposed(by: disposeBag)
+        
+        //recentDataSubject Binding
+        viewModel.recentDataSubject
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] books in
+                self?.recentBooks = books
+                self?.searchView.collectionView.reloadData()
+            }, onError: { error in
+                print(error)
+            }).disposed(by: disposeBag)
+    }
+    
+    //MARK: - enrolSetting
+    private func setting() {
+        searchView.searchBar.delegate = self
+        
+        searchView.collectionView.dataSource = self
+        searchView.collectionView.delegate = self
+        searchView.collectionView.register(
+            SectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SectionHeaderView.id
+        )
+        searchView.collectionView.collectionViewLayout = creatLayout()
+    }
+    
+    //MARK: - Section 구분
+    enum Section: Int, CaseIterable {
+        case recentBooks
+        case searchBooks
+        
+        var title: String {
+            switch self {
+            case .recentBooks: return "최근 본 책"
+            case .searchBooks: return "검색 결과"
+            }
+        }
+    }
+    
+    //MARK: - CollectionView Layout
     func creatLayout() -> UICollectionViewLayout {
         return UICollectionViewCompositionalLayout { sectionIndex, enviroment in
-            guard let sectionType = Section(rawValue: sectionIndex) else { return nil}
+            guard let sectionType = Section(rawValue: sectionIndex) else { return nil }
             
             switch sectionType {
-            case .recentBook:
+            case .recentBooks:
                 return self.createRecentBookLayout()
             case .searchBooks:
                 return self.createSearchBookLayout()
@@ -94,7 +127,7 @@ class SearchViewController: UIViewController {
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(100),
-            heightDimension: .absolute(150)
+            heightDimension: .absolute(140)
         )
         
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
@@ -152,51 +185,45 @@ class SearchViewController: UIViewController {
     }
 }
 
-enum Section: Int, CaseIterable {
-    case recentBook
-    case searchBooks
-    
-    var title: String {
-        switch self {
-        case .recentBook: return "최근 본 책"
-        case .searchBooks: return "검색 결과"
-        }
-    }
-}
-
+//MARK: - CollectionView 세팅(셀의 갯수)
 extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch Section(rawValue: section) {
-        case .recentBook: return recentBook.count
+        case .recentBooks: return recentBooks.count
         case .searchBooks: return searchBooks.count
         case .none: return 0
         }
     }
     
+    //MARK: - CollectionView 세팅(셀의 구성)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchListCell.id, for: indexPath) as? SearchListCell else {  return UICollectionViewCell()
-        }
         
         switch Section(rawValue: indexPath.section) {
-        case .recentBook:
-            cell.configure1(with: recentBook[indexPath.row])
+        case .recentBooks:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecentBookCell.id, for: indexPath) as? RecentBookCell else {  return UICollectionViewCell()
+            }
+            cell.configure(with: recentBooks[indexPath.row])
+            return cell
         case .searchBooks:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchListCell.id, for: indexPath) as? SearchListCell else {  return UICollectionViewCell()
+            }
             cell.configure(with: searchBooks[indexPath.row])
+            return cell
         case .none:
             break
         }
-        return cell
+        return UICollectionViewCell()
     }
     
-    //MARK: - section header
+    //MARK: - Header Section 구분
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard kind == UICollectionView.elementKindSectionHeader else {
             return UICollectionReusableView()
         }
         
         guard let section = Section(rawValue: indexPath.section) else {
-             return UICollectionReusableView()
-         }
+            return UICollectionReusableView()
+        }
         
         let headerView = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
@@ -213,33 +240,39 @@ extension SearchViewController: UICollectionViewDataSource {
     }
 }
 
+//MARK: - CollectionView 세팅(셀의 선택시)
 extension SearchViewController: UICollectionViewDelegate {
-    
-}
-
-//MARK: - api요청
-extension SearchViewController {
-    func fetchSearchData(query: String) {
-        guard let url = URL(string: "https://dapi.kakao.com/v3/search/book?query=\(query)") else {
-            print("url이 잘못되었습니다.")
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let detailVC = DetailViewController()
+        let section = Section(rawValue: indexPath.section)
+        let selectedBook: BookInfo
+        
+        
+        switch section {
+        case .recentBooks:
+            selectedBook = recentBooks[indexPath.row]
+        case .searchBooks:
+            selectedBook = searchBooks[indexPath.row]
+        default :
             return
         }
         
-        let header: HTTPHeaders = ["Authorization": "KakaoAK 2650b14821af8f320b2b30c04f351189"]
+        detailVC.configure(with: selectedBook)
         
-        NetworkManager.shared.fetchData(url, header)
-            .subscribe(onSuccess: { (bookinfoResponse: BookInformation) in
-                self.searchBooks = bookinfoResponse.documents.map { BookInfo(from: $0) }
-                self.searchView.collectionView.reloadData()
-            }, onFailure: {  error in
-                print(error)
-            }).disposed(by: disposeBag)
+        CoreDataManager.shared.addToRecentBooks(book: selectedBook)
+        
+        detailVC.modalPresentationStyle = .pageSheet
+        present(detailVC, animated: true)
     }
 }
 
+//MARK: - SearchBar 입력
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        fetchSearchData(query: searchBar.text!)
+        viewModel.fetchSearchData(query: searchBar.text!)
     }
 }
+
+

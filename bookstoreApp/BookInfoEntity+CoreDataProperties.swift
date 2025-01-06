@@ -2,7 +2,7 @@
 //  BookInfoEntity+CoreDataProperties.swift
 //  bookstoreApp
 //
-//  Created by jae hoon lee on 1/1/25.
+//  Created by jae hoon lee on 1/6/25.
 //
 //
 
@@ -16,11 +16,12 @@ extension BookInfoEntity {
         return NSFetchRequest<BookInfoEntity>(entityName: "BookInfoEntity")
     }
 
-    @NSManaged public var authors: [String]?
+    @NSManaged public var authors: Data?
     @NSManaged public var contents: String?
+    @NSManaged public var isbn: String?
     @NSManaged public var thumbnail: String?
     @NSManaged public var title: String?
-    @NSManaged public var isbn: String?
+    @NSManaged public var price: Double
 
 }
 
