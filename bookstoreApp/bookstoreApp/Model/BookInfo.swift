@@ -16,10 +16,10 @@ struct BookInfo {
 
 extension BookInfo {
     init(from data: BookInformation.Data) {
-        self.authors = data.authors ?? ["Unknown Author"]
-        self.contents = data.contents ?? "No description available."
+        self.authors = data.authors ?? []
+        self.contents = data.contents ?? ""
         self.thumbnail = data.thumbnail ?? ""
-        self.title = data.title ?? "Untitled"
-        self.isbn = data.isbn ?? "Unknown ISBN"
+        self.title = data.title ?? ""
+        self.isbn = data.isbn ?? ""
     }
 }
